@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Management</title>
+    <style>
+        /* Add your custom CSS styles for a cool design here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .data-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .data-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Management</h1>
+        <label for="search">Search Data:</label>
+        <input type="text" id="search" oninput="searchData()" placeholder="Enter data code">
+        <ul class="data-list" id="dataList">
+            <!-- Data items will be dynamically populated here -->
+        </ul>
+        <div id="dataDetails" style="display: none;">
+            <h2>Data Details</h2>
+            <label for="appOwner">Application Owner:</label>
+            <input type="text" id="appOwner">
+            <label for="role">Role:</label>
+            <input type="text" id="role">
+            <label for="sysOwner">System Owner:</label>
+            <input type="text" id="sysOwner">
+            <button onclick="saveData()">Save</button>
+        </div>
+        <p id="successMessage" style="display: none;">Successfully added data.</p>
+    </div>
+
+    <script>
+        const dataList = [
+            "JKTAPCL01",
+            "JKTAPCL02",
+            "JKTAPCL03"
+            // Add more data codes as needed
+        ];
+
+        function searchData() {
+            const searchInput = document.getElementById("search").value.toLowerCase();
+            const dataListElement = document.getElementById("dataList");
+            dataListElement.innerHTML = "";
+
+            dataList.forEach((data) => {
+                if (data.toLowerCase().includes(searchInput)) {
+                    const listItem = document.createElement("li");
+                    listItem.className = "data-item";
+                    listItem.textContent = data;
+                    listItem.addEventListener("click", () => showDataDetails(data));
+                    dataListElement.appendChild(listItem);
+                }
+            });
+        }
+
+        function showDataDetails(data) {
+            document.getElementById("dataDetails").style.display = "block";
+            document.getElementById("appOwner").value = "";
+            document.getElementById("role").value = "";
+            document.getElementById("sysOwner").value = "";
+            document.getElementById("successMessage").style.display = "none";
+        }
+
+        function saveData() {
+            const appOwner = document.getElementById("appOwner").value;
+            const role = document.getElementById("role").value;
+            const sysOwner = document.getElementById("sysOwner").value;
+
+            // You can implement data saving logic here (e.g., update a database).
+
+            // Clear the input fields after saving
+            document.getElementById("appOwner").value = "";
+            document.getElementById("role").value = "";
+            document.getElementById("sysOwner").value = "";
+
+            // Display a success message
+            document.getElementById("successMessage").style.display = "block";
+        }
+    </script>
+</body>
+</html>
